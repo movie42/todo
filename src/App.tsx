@@ -1,9 +1,9 @@
 import React from "react";
-import { Login } from "@/Pages";
 import styled from "styled-components";
+import Router from "./Routes/Router";
 
 function App() {
-  return <Login />;
+  return <Router />;
 }
 
 export default App;
