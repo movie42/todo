@@ -47,7 +47,7 @@ export const postData = async <T extends unknown>({
   try {
     const response = await instance.post(url, data, {
       headers: {
-        Authorization: token
+        Authorization: `Bearer ${token}`
       },
       ...config
     });

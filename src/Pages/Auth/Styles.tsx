@@ -6,7 +6,15 @@ export const Container = styled.div`
   align-items: center;
   height: calc(100vh - 7rem);
 `;
-export const FormContainer = styled.div``;
+
+export const FormContainer = styled.div`
+  box-sizing: border-box;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1000px;
+`;
 export const FormItemWrapper = styled.div`
+  display: grid;
+  grid-gap: 1rem;
   margin: 2rem 0;
 `;

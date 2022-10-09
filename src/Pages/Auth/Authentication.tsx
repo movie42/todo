@@ -5,6 +5,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import { Container, FormContainer, FormItemWrapper } from "./Styles";
 import { useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable/Immutable";
+import { Form } from "@/Components";
 
 const Authentication = () => {
   const navigate = useNavigate();
@@ -43,10 +44,10 @@ const Authentication = () => {
   return (
     <Container>
       <FormContainer>
-        <form onSubmit={(e) => handleSubmit(e, { email, password })}>
+        <Form onSubmit={(e) => handleSubmit(e, { email, password })}>
           <FormItemWrapper>
-            <label>이메일</label>
-            <input
+            <Form.Label>이메일</Form.Label>
+            <Form.Input
               type="text"
               placeholder="이메일을 입력해주세요."
               value={email}
@@ -63,8 +64,8 @@ const Authentication = () => {
             />
           </FormItemWrapper>
           <FormItemWrapper>
-            <label>비밀번호</label>
-            <input
+            <Form.Label>비밀번호</Form.Label>
+            <Form.Input
               type="password"
               placeholder="비밀번호를 입력해주세요."
               value={password}
@@ -82,8 +83,8 @@ const Authentication = () => {
               }}
             />
           </FormItemWrapper>
-          <button disabled={buttonDisabled}>로그인/회원가입</button>
-        </form>
+          <Form.Button disabled={buttonDisabled}>로그인/회원가입</Form.Button>
+        </Form>
       </FormContainer>
     </Container>
   );
