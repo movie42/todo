@@ -26,7 +26,6 @@ const Authentication = () => {
 
   useEffect(() => {
     const store = getLocalStorage(LOCAL_STORAGE_KEY);
-    console.log(store);
     if (store !== null) {
       if (store.hasOwnProperty("token")) {
         navigate("/todo", { replace: true });

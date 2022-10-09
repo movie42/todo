@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import { MainLayout } from "@/Components";
-import { Authentication, Todo } from "@/Pages";
+import { Authentication, Todo, Logout } from "@/Pages";
 
 interface IRouterProps {}
 
@@ -12,6 +12,7 @@ const Router = () => {
         <Route path="/" element={<Authentication />} />
         <Route path="/todo" element={<Todo />} />
       </Route>
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   );
 };
