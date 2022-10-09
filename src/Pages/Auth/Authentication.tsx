@@ -1,9 +1,13 @@
 import { useValidate } from "@/lib/hook";
-import { useControlButtonDisabled } from "./hooks";
+import { useEffect } from "react";
+import { useControlButtonDisabled, useRequestAuthentication } from "./hooks";
+import useLocalStorage from "./hooks/useLocalStorage";
 import { Container, FormContainer, FormItemWrapper } from "./Styles";
-import { handleSubmit } from "./utils";
+import { useNavigate } from "react-router-dom";
+import { LOCAL_STORAGE_KEY } from "@/lib/Immutable/Immutable";
 
 const Authentication = () => {
+  const navigate = useNavigate();
   const {
     email,
     setEmail,
@@ -16,6 +20,25 @@ const Authentication = () => {
     isValidate
   } = useValidate();
   const buttonDisabled = useControlButtonDisabled({ isEmail, isPassword });
+  const { handleSubmit, token } = useRequestAuthentication();
+  const { setLocalStorage, getLocalStorage } = useLocalStorage();
+
+  useEffect(() => {
+    const store = getLocalStorage(LOCAL_STORAGE_KEY);
+    console.log(store);
+    if (store !== null) {
+      if (store.hasOwnProperty("token")) {
+        navigate("/todo", { replace: true });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      setLocalStorage(LOCAL_STORAGE_KEY, { token });
+      navigate("/todo", { replace: true });
+    }
+  }, [token]);
 
   return (
     <Container>
@@ -30,7 +53,7 @@ const Authentication = () => {
               onChange={(e) => {
                 setEmail(e.currentTarget.value);
                 const isEmail = isValidate(e.currentTarget.value, "email");
-                console.log(isEmail);
+
                 if (isEmail) {
                   setIsEmail(true);
                 } else {

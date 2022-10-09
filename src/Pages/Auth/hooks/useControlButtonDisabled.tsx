@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface IButtonDisabledHook {
@@ -6,7 +5,7 @@ interface IButtonDisabledHook {
   isPassword: boolean;
 }
 
-export const useControlButtonDisabled = ({
+const useControlButtonDisabled = ({
   isEmail,
   isPassword
 }: IButtonDisabledHook) => {
@@ -22,3 +21,5 @@ export const useControlButtonDisabled = ({
 
   return buttonDisabled;
 };
+
+export default useControlButtonDisabled;
