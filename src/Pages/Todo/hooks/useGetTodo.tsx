@@ -1,6 +1,6 @@
 import { getData } from "@/lib/api/api";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable/Immutable";
-import useLocalStorage from "@/Pages/Auth/hooks/useLocalStorage";
+import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { useLocalStorage } from "@/lib/hooks";
 import { useEffect, useState } from "react";
 
 interface ITodoItemProps {
@@ -38,7 +38,7 @@ const useGetTodo = () => {
     getItem();
   }, []);
 
-  return todoList;
+  return { todoList, getItem };
 };
 
 export default useGetTodo;
