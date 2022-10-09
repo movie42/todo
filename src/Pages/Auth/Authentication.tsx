@@ -1,10 +1,10 @@
-import { useValidate } from "@/lib/hook";
+import { useValidate } from "@/lib/hooks";
 import { useEffect } from "react";
 import { useControlButtonDisabled, useRequestAuthentication } from "./hooks";
-import useLocalStorage from "./hooks/useLocalStorage";
+import { useLocalStorage } from "@/lib/hooks";
 import { Container, FormContainer, FormItemWrapper } from "./Styles";
 import { useNavigate } from "react-router-dom";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 import { Form } from "@/Components";
 
 const Authentication = () => {
