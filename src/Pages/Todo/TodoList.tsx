@@ -17,6 +17,7 @@ const TodoList = ({ todoList }: ITodoListProps) => {
     <ul>
       {todoList.map(({ id, todo, isCompleted, userId }) => (
         <TodoItem
+          key={id}
           id={id}
           todo={todo}
           isCompleted={isCompleted}

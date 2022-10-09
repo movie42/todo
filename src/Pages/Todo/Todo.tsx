@@ -1,30 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useGetTodo from "./hooks/useGetTodo";
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
 
 interface ITodoProps {}
 
 const Todo = () => {
-  const todoList = [
-    {
-      id: 1,
-      todo: "더미 아이디",
-      isCompleted: false,
-      userId: 1
-    },
-    {
-      id: 2,
-      todo: "아이디 뭐라고???",
-      isCompleted: false,
-      userId: 1
-    },
-    {
-      id: 3,
-      todo: "일론 머스크 별론데",
-      isCompleted: false,
-      userId: 1
-    }
-  ];
+  const todoList = useGetTodo();
 
   return (
     <div>
