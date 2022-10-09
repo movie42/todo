@@ -1,42 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { UpdateTodoData } from "./hooks/useUpdateTodo";
-import TodoEdit from "./TodoEdit";
 
 interface ITodoItemProps {
   id: number;
-  todo: string;
   isCompleted: boolean;
+  todo: string;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDelete: (id: number) => Promise<void>;
   handleUpdateTodo: (
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
     data: UpdateTodoData
   ) => Promise<void>;
 }
 
 const TodoItem = ({
   id,
-  todo,
   isCompleted,
+  todo,
+  setIsEdit,
+  handleDelete,
   handleUpdateTodo
 }: ITodoItemProps) => {
-  const [isEdit, setIsEdit] = useState(false);
-
   return (
-    <li>
-      {isEdit ? (
-        <TodoEdit
-          id={id}
-          todo={todo}
-          isCompleted={isCompleted}
-          setIsEdit={setIsEdit}
-          handleUpdateTodo={handleUpdateTodo}
-        />
-      ) : (
-        <div>
-          <h3>{todo}</h3>
-          <button onClick={() => setIsEdit(true)}>수정</button>
-        </div>
-      )}
-    </li>
+    <div>
+      <h3>{todo}</h3>
+      <button onClick={() => setIsEdit(true)}>수정</button>
+      <button onClick={() => handleDelete(id)}>삭제</button>
+      <button
+        onClick={(e) =>
+          handleUpdateTodo(e, { id, isCompleted: !isCompleted, todo })
+        }>
+        완료
+      </button>
+    </div>
   );
 };
 

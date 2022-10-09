@@ -1,13 +1,14 @@
 import React from "react";
 import { UpdateTodoData } from "./hooks/useUpdateTodo";
-import TodoItem from "./TodoItem";
+import TodoItemContainer from "./TodoItemContainer";
 
 interface ITodoListProps {
   todoList: ITodoItemProps[];
   handleUpdateTodo: (
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
     data: UpdateTodoData
   ) => Promise<void>;
+  handleDelete: (id: number) => Promise<void>;
 }
 
 interface ITodoItemProps {
@@ -17,19 +18,26 @@ interface ITodoItemProps {
   userId?: number;
 }
 
-const TodoList = ({ todoList, handleUpdateTodo }: ITodoListProps) => {
+const TodoList = ({
+  todoList,
+  handleUpdateTodo,
+  handleDelete
+}: ITodoListProps) => {
   return (
-    <ul>
-      {todoList.map(({ id, todo, isCompleted, userId }) => (
-        <TodoItem
-          key={id}
-          id={id}
-          todo={todo}
-          isCompleted={isCompleted}
-          handleUpdateTodo={handleUpdateTodo}
-        />
-      ))}
-    </ul>
+    <div>
+      <ul>
+        {todoList.map(({ id, todo, isCompleted, userId }) => (
+          <TodoItemContainer
+            key={id}
+            id={id}
+            todo={todo}
+            isCompleted={isCompleted}
+            handleUpdateTodo={handleUpdateTodo}
+            handleDelete={handleDelete}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

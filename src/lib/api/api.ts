@@ -19,6 +19,8 @@ interface IAPIPutValue<T> extends IAPIValue {
   data: T;
 }
 
+interface IAPIDeleteValue extends IAPIValue {}
+
 export const getData = async ({ url, token, config }: IAPIValue) => {
   try {
     const response = await instance.get(url, {
@@ -98,5 +100,30 @@ export const putData = async <T extends unknown>({
     }>;
 
     return responseError?.response?.data;
+  }
+};
+
+export const deleteData = async ({ url, token, config }: IAPIDeleteValue) => {
+  try {
+    const response = await instance.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      ...config
+    });
+
+    if (response.status >= 400) {
+      throw new Error();
+    }
+
+    return { status: response.status };
+  } catch (error) {
+    const responseError = error as AxiosError<{
+      statusCode: number;
+      message: string;
+    }>;
+
+    return { error: responseError?.response?.data };
   }
 };

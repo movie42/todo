@@ -1,7 +1,7 @@
 import { putData } from "@/lib/api/api";
 import { useLocalStorage } from "@/lib/hooks";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export interface UpdateTodoData {
   id: number;
@@ -14,7 +14,7 @@ const useUpdateTodo = () => {
   const { getLocalStorage } = useLocalStorage();
 
   const handleUpdateTodo = async (
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
     { id, todo, isCompleted }: UpdateTodoData
   ) => {
     e.preventDefault();
@@ -37,6 +37,10 @@ const useUpdateTodo = () => {
       setIsSuccess(false);
     }
   };
+
+  useEffect(() => {
+    setIsSuccess(false);
+  }, []);
 
   return { isSuccess, handleUpdateTodo };
 };
