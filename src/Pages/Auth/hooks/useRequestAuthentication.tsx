@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
-import { postData } from "@/lib/hook/api/api";
+import { postData } from "@/lib/api/api";
 
 interface AuthenticationFormValue {
   email: string;

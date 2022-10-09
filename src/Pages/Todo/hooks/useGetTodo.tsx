@@ -1,4 +1,4 @@
-import { getData } from "@/lib/hook/api/api";
+import { getData } from "@/lib/api/api";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable/Immutable";
 import useLocalStorage from "@/Pages/Auth/hooks/useLocalStorage";
 import { useEffect, useState } from "react";
