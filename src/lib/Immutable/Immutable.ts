@@ -1,4 +1,4 @@
 export const REG_EXP = {
-  email: "[a-z0-9]+@[a-z]+.[a-z]{2,3}",
+  email: "^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){2,3}$",
   password: "^.{8,}"
 };
