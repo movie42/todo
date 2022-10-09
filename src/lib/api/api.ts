@@ -15,6 +15,10 @@ interface IAPIPostValue<T> extends IAPIValue {
   data: T;
 }
 
+interface IAPIPutValue<T> extends IAPIValue {
+  data: T;
+}
+
 export const getData = async ({ url, token, config }: IAPIValue) => {
   try {
     const response = await instance.get(url, {
@@ -34,7 +38,7 @@ export const getData = async ({ url, token, config }: IAPIValue) => {
       statusCode: number;
       message: string;
     }>;
-    return responseError;
+    return { responseError };
   }
 };
 
@@ -48,6 +52,36 @@ export const postData = async <T extends unknown>({
     const response = await instance.post(url, data, {
       headers: {
         Authorization: `Bearer ${token}`
+      },
+      ...config
+    });
+
+    if (response.status >= 400) {
+      throw new Error();
+    }
+
+    return response.data;
+  } catch (error) {
+    const responseError = error as AxiosError<{
+      statusCode: number;
+      message: string;
+    }>;
+
+    return responseError?.response?.data;
+  }
+};
+
+export const putData = async <T extends unknown>({
+  url,
+  data,
+  token,
+  config
+}: IAPIPutValue<T>) => {
+  try {
+    const response = await instance.put(url, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
       ...config
     });

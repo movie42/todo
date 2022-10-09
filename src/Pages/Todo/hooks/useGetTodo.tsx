@@ -11,6 +11,8 @@ interface ITodoItemProps {
 }
 
 const useGetTodo = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [todoList, setTodoList] = useState<ITodoItemProps[]>([
     {
       id: 1,
@@ -23,14 +25,29 @@ const useGetTodo = () => {
   const { getLocalStorage } = useLocalStorage();
 
   const getItem = async () => {
+    setIsLoading(true);
+    setIsSuccess(false);
+
     const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
 
     if (token) {
       const response = await getData({ url: "/todos", token });
       setTodoList([...response]);
+
+      setIsLoading(false);
+      setIsSuccess(true);
+
+      if (response.responseError) {
+        setIsLoading(false);
+        setIsSuccess(false);
+        throw new Error(response.responseError.message);
+      }
+
       return response;
     }
 
+    setIsLoading(false);
+    setIsSuccess(false);
     return [];
   };
 
@@ -38,7 +55,7 @@ const useGetTodo = () => {
     getItem();
   }, []);
 
-  return { todoList, getItem };
+  return { todoList, getItem, isSuccess, isLoading };
 };
 
 export default useGetTodo;

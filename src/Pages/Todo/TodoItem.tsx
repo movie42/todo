@@ -1,20 +1,35 @@
 import React, { useState } from "react";
+import { UpdateTodoData } from "./hooks/useUpdateTodo";
 import TodoEdit from "./TodoEdit";
 
 interface ITodoItemProps {
   id: number;
   todo: string;
   isCompleted: boolean;
-  userId: number;
+  handleUpdateTodo: (
+    e: React.FormEvent<HTMLFormElement>,
+    data: UpdateTodoData
+  ) => Promise<void>;
 }
 
-const TodoItem = ({ id, todo, isCompleted, userId }: ITodoItemProps) => {
+const TodoItem = ({
+  id,
+  todo,
+  isCompleted,
+  handleUpdateTodo
+}: ITodoItemProps) => {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
     <li>
       {isEdit ? (
-        <TodoEdit />
+        <TodoEdit
+          id={id}
+          todo={todo}
+          isCompleted={isCompleted}
+          setIsEdit={setIsEdit}
+          handleUpdateTodo={handleUpdateTodo}
+        />
       ) : (
         <div>
           <h3>{todo}</h3>

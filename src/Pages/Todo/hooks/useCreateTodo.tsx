@@ -5,7 +5,7 @@ import { useLocalStorage } from "@/lib/hooks";
 
 interface IusePostTodoProps {}
 
-const usePostTodo = () => {
+const useCreateTodo = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { getLocalStorage } = useLocalStorage();
 
@@ -37,4 +37,4 @@ const usePostTodo = () => {
   return { isSuccess, handleCreateTodoContents };
 };
 
-export default usePostTodo;
+export default useCreateTodo;

@@ -1,12 +1,51 @@
-import React from "react";
+import { Form } from "@/Components";
+import React, { useEffect, useState } from "react";
+import { useUpdateTodo } from "./hooks";
+import { UpdateTodoData } from "./hooks/useUpdateTodo";
 
-interface ITodoEditProps {}
+interface ITodoEditProps {
+  id: number;
+  todo: string;
+  isCompleted: boolean;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  handleUpdateTodo: (
+    e: React.FormEvent<HTMLFormElement>,
+    data: UpdateTodoData
+  ) => Promise<void>;
+}
 
-const TodoEdit = () => {
+const TodoEdit = ({
+  id,
+  todo,
+  isCompleted,
+  setIsEdit,
+  handleUpdateTodo
+}: ITodoEditProps) => {
+  const [editTodo, setEditTodo] = useState(todo);
+
+  const handleCancelTodoEdit = () => {
+    setEditTodo(todo);
+    setIsEdit(false);
+  };
+
+  const handleEditTodo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleUpdateTodo(e, { id, todo: editTodo, isCompleted });
+    setIsEdit(false);
+  };
+
   return (
-    <form>
-      <input type="text" />
-    </form>
+    <Form onSubmit={handleEditTodo}>
+      <Form.Input
+        value={editTodo}
+        type="text"
+        onChange={(e) => setEditTodo(e.currentTarget.value)}
+      />
+      <Form.Button>제출</Form.Button>
+      <Form.Button type="button" onClick={handleCancelTodoEdit}>
+        취소
+      </Form.Button>
+    </Form>
   );
 };
 
