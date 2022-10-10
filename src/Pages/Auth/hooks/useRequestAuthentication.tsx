@@ -1,17 +1,36 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { postData } from "@/lib/api/api";
 
-interface AuthenticationFormValue {
+export interface AuthenticationFormValue {
   email: string;
   password: string;
 }
-interface IuseRequestAuthenticationProps {}
+
+export interface ErrorProps {
+  statusCode: number;
+  message: string;
+}
+
+interface AuthenticationError {
+  response: {
+    data: ErrorProps;
+  };
+}
 
 const useRequestAuthentication = () => {
+  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<ErrorProps | null>(null);
   const [token, setToken] = useState("");
 
   const handleSignup = async ({ email, password }: AuthenticationFormValue) => {
-    const response = await postData<AuthenticationFormValue>({
+    setIsSuccess(false);
+
+    const response = await postData<
+      AuthenticationFormValue,
+      AuthenticationError
+    >({
       url: "/auth/signup",
       data: {
         email,
@@ -19,11 +38,34 @@ const useRequestAuthentication = () => {
       }
     });
 
-    return response;
+    const { access_token } = response;
+
+    if (!access_token) {
+      const {
+        response: {
+          data: { statusCode, message }
+        }
+      } = response;
+
+      setIsError(true);
+      setError({
+        statusCode,
+        message
+      });
+      return { statusCode, message };
+    }
+
+    setIsSuccess(true);
+    setToken(access_token);
   };
 
   const handleSignin = async ({ email, password }: AuthenticationFormValue) => {
-    const response = await postData<AuthenticationFormValue>({
+    setIsSuccess(false);
+
+    const response = await postData<
+      AuthenticationFormValue,
+      AuthenticationError
+    >({
       url: "/auth/signin",
       data: {
         email,
@@ -31,38 +73,52 @@ const useRequestAuthentication = () => {
       }
     });
 
-    if (response?.data?.statusCode === 401) {
-      return { statusCode: 401, message: "패스워드를 다시 확인해보세요." };
-    }
+    const { access_token } = response;
 
-    return response;
-  };
+    if (!access_token) {
+      const {
+        response: {
+          data: { statusCode, message }
+        }
+      } = response;
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-    { email, password }: AuthenticationFormValue
-  ) => {
-    e.preventDefault();
+      setIsError(true);
 
-    const signin = await handleSignin({ email, password });
+      if (statusCode === 401) {
+        setError({
+          statusCode,
+          message: "이메일 또는 비밀번호를 확인해주세요."
+        });
 
-    if (signin?.access_token) {
-      setToken(signin?.access_token);
-      return signin?.access_token;
-    }
-
-    if (signin?.message === "해당 사용자가 존재하지 않습니다.") {
-      const signup = await handleSignup({ email, password });
-      if (signup.access_token) {
-        setToken(signup?.access_token);
-        return signup.access_token;
+        return {
+          statusCode,
+          message: "이메일 또는 비밀번호를 확인해주세요."
+        };
       }
 
-      return signup;
+      setError({
+        statusCode,
+        message
+      });
+      setIsSignUp(false);
+
+      return { statusCode, message };
     }
+
+    setIsSuccess(true);
+    setToken(access_token);
   };
 
-  return { handleSubmit, handleSignin, handleSignup, token };
+  return {
+    handleSignin,
+    handleSignup,
+    token,
+    error,
+    isError,
+    isSuccess,
+    isSignUp,
+    setIsSignUp
+  };
 };
 
 export default useRequestAuthentication;

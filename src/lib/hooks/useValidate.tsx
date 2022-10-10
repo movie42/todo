@@ -7,18 +7,20 @@ const useValidate = () => {
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
 
-  const isValidate = (value: string, type: "email" | "password") => {
+  const handleValidate = (value: string, type: "email" | "password") => {
     if (type === "email") {
       const isEmail = value.match(REG_EXP.email);
-      return isEmail !== null ? true : false;
+
+      return isEmail !== null ? setIsEmail(true) : setIsEmail(false);
     }
 
     if (type === "password") {
       const isPassword = value.match(REG_EXP.password);
-      return isPassword !== null ? true : false;
+      return isPassword !== null ? setIsPassword(true) : setIsPassword(false);
     }
 
-    return false;
+    setIsEmail(false);
+    setIsPassword(false);
   };
 
   return {
@@ -27,10 +29,8 @@ const useValidate = () => {
     password,
     setPassword,
     isEmail,
-    setIsEmail,
     isPassword,
-    setIsPassword,
-    isValidate
+    handleValidate
   };
 };
 

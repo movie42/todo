@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/lib/Immutable/Immutable";
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const instance = axios.create({
   baseURL: BASE_URL
@@ -11,8 +11,8 @@ interface IAPIValue {
   config?: AxiosRequestConfig;
 }
 
-interface IAPIPostValue<T> extends IAPIValue {
-  data: T;
+interface IAPIPostValue<TData, TError> extends IAPIValue {
+  data: TData;
 }
 
 interface IAPIPutValue<T> extends IAPIValue {
@@ -30,26 +30,22 @@ export const getData = async ({ url, token, config }: IAPIValue) => {
       ...config
     });
 
-    if (response.status >= 400) {
-      throw new Error();
-    }
-
     return response.data;
   } catch (error) {
     const responseError = error as AxiosError<{
       statusCode: number;
       message: string;
     }>;
-    return { responseError };
+    return responseError;
   }
 };
 
-export const postData = async <T extends unknown>({
+export const postData = async <TData, TError extends unknown>({
   url,
   data,
   token,
   config
-}: IAPIPostValue<T>) => {
+}: IAPIPostValue<TData, TError>) => {
   try {
     const response = await instance.post(url, data, {
       headers: {
@@ -58,18 +54,11 @@ export const postData = async <T extends unknown>({
       ...config
     });
 
-    if (response.status >= 400) {
-      throw new Error();
-    }
-
     return response.data;
   } catch (error) {
-    const responseError = error as AxiosError<{
-      statusCode: number;
-      message: string;
-    }>;
+    const responseError = error as AxiosError<TError>;
 
-    return responseError?.response?.data;
+    return responseError;
   }
 };
 
@@ -88,18 +77,14 @@ export const putData = async <T extends unknown>({
       ...config
     });
 
-    if (response.status >= 400) {
-      throw new Error();
-    }
-
-    return response.data;
+    return response;
   } catch (error) {
     const responseError = error as AxiosError<{
       statusCode: number;
       message: string;
     }>;
 
-    return responseError?.response?.data;
+    return responseError;
   }
 };
 
@@ -113,10 +98,6 @@ export const deleteData = async ({ url, token, config }: IAPIDeleteValue) => {
       ...config
     });
 
-    if (response.status >= 400) {
-      throw new Error();
-    }
-
     return { status: response.status };
   } catch (error) {
     const responseError = error as AxiosError<{
@@ -124,6 +105,6 @@ export const deleteData = async ({ url, token, config }: IAPIDeleteValue) => {
       message: string;
     }>;
 
-    return { error: responseError?.response?.data };
+    return responseError;
   }
 };
