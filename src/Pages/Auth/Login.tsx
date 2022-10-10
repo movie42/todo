@@ -1,12 +1,8 @@
-import { Form, Label } from "@/Components";
-import { useValidate } from "@/lib/hooks";
 import React from "react";
-import {
-  AuthenticationFormValue,
-  ErrorProps,
-  useControlButtonDisabled
-} from "./hooks";
+import { Form, Label } from "@/Components";
+import { AuthenticationFormValue, ErrorProps } from "./hooks";
 import { Container, FormContainer, FormItemWrapper } from "./Styles";
+import { useControlButtonDisabled } from "@/lib/hooks";
 
 interface ILoginProps {
   email: string;
@@ -39,7 +35,9 @@ const Login = ({
   isPassword,
   handleValidate
 }: ILoginProps) => {
-  const buttonDisabled = useControlButtonDisabled({ isEmail, isPassword });
+  const buttonDisabled = useControlButtonDisabled({
+    data: [isEmail, isPassword]
+  });
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,

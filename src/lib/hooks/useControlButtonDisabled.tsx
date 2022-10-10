@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 
 interface IButtonDisabledHook {
-  isEmail: boolean;
-  isPassword: boolean;
+  data: boolean[];
 }
 
-const useControlButtonDisabled = ({
-  isEmail,
-  isPassword
-}: IButtonDisabledHook) => {
+const useControlButtonDisabled = ({ data }: IButtonDisabledHook) => {
+  const [isTrue, setIsTrue] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
+  const validateArray = (array: boolean[]) => {
+    setIsTrue(array.every((value) => value === true));
+  };
+
   useEffect(() => {
-    if (isEmail && isPassword) {
+    validateArray(data);
+    if (isTrue) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
     }
-  }, [isEmail, isPassword]);
+  }, [isTrue, data]);
 
   return buttonDisabled;
 };
