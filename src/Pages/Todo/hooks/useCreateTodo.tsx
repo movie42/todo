@@ -3,9 +3,12 @@ import { postData } from "@/lib/api/api";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 import { useLocalStorage } from "@/lib/hooks";
 
-interface IusePostTodoProps {}
-
 const useCreateTodo = () => {
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<{
+    statusCode: number;
+    message: string;
+  } | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const { getLocalStorage } = useLocalStorage();
 
@@ -25,16 +28,25 @@ const useCreateTodo = () => {
         token
       });
 
-      if (response) {
+      if (response.id) {
         setIsSuccess(true);
+        setIsError(false);
         return;
       }
 
+      const {
+        response: {
+          data: { statusCode, message }
+        }
+      } = response;
+
+      setError({ statusCode, message });
+      setIsError(true);
       setIsSuccess(false);
     }
   };
 
-  return { isSuccess, handleCreateTodoContents };
+  return { isSuccess, handleCreateTodoContents, isError, error };
 };
 
 export default useCreateTodo;

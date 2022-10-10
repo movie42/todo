@@ -8,8 +8,12 @@ interface ITodoProps {}
 
 const Todo = () => {
   const { todoList, getItem } = useGetTodo();
-  const { handleCreateTodoContents, isSuccess: isCreateSuccess } =
-    useCreateTodo();
+  const {
+    handleCreateTodoContents,
+    isSuccess: isCreateSuccess,
+    isError,
+    error
+  } = useCreateTodo();
   const { handleUpdateTodo, isSuccess: isUpdateSuccess } = useUpdateTodo();
   const { handleDelete, isSuccess: isDeleteSuccess } = useDeleteTodo();
 
@@ -34,6 +38,8 @@ const Todo = () => {
   return (
     <div>
       <TodoCreate
+        isError={isError}
+        error={error}
         isSuccess={isCreateSuccess}
         onSubmit={handleCreateTodoContents}
       />
