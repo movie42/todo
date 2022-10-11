@@ -31,7 +31,7 @@ const Header = () => {
     if (item !== null && item.token !== "") {
       setIsLogin(true);
     }
-  }, [setIsLogin, getLocalStorage]);
+  }, []);
 
   return (
     <Container>

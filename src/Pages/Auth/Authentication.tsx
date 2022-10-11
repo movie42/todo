@@ -32,15 +32,6 @@ const Authentication = () => {
   const { setLocalStorage, getLocalStorage } = useLocalStorage();
 
   useEffect(() => {
-    const store = getLocalStorage(LOCAL_STORAGE_KEY);
-    if (store !== null) {
-      if (store.hasOwnProperty("token")) {
-        navigate("/todo", { replace: true });
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (isSuccess) {
       setLocalStorage(LOCAL_STORAGE_KEY, { token });
       navigate("/todo", { replace: true });
