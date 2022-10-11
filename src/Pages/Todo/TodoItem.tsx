@@ -1,6 +1,6 @@
 import React from "react";
 import { UpdateTodoData } from "./hooks/useUpdateTodo";
-import { TodoItemContainer } from "./Styles";
+import { TodoListItem } from "./Styles";
 
 interface ITodoItemProps {
   id: number;
@@ -23,7 +23,7 @@ const TodoItem = ({
   handleUpdateTodo
 }: ITodoItemProps) => {
   return (
-    <TodoItemContainer>
+    <>
       <h3>{todo}</h3>
       <button className="edit" onClick={() => setIsEdit(true)}>
         수정
@@ -38,7 +38,7 @@ const TodoItem = ({
         }>
         완료
       </button>
-    </TodoItemContainer>
+    </>
   );
 };
 
