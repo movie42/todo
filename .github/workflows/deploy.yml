@@ -1,0 +1,21 @@
+name: Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deplyment:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+      - name: install dependencies
+        run: npm install
+      - name: build
+        run: CI=false npm run build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-page
+          folder: ./build
