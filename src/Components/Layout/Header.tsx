@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { useLocalStorage } from "@/lib/hooks";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { AppContext } from "@/lib/state";
 
 const Container = styled.header`
   box-sizing: border-box;
@@ -22,16 +23,9 @@ const Container = styled.header`
 `;
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
-  const { getLocalStorage } = useLocalStorage();
-
-  useEffect(() => {
-    const item = getLocalStorage(LOCAL_STORAGE_KEY);
-    if (item !== null && item.token !== "") {
-      setIsLogin(true);
-    }
-  }, []);
+  const {
+    auth: { isLogin }
+  } = useContext(AppContext);
 
   return (
     <Container>
