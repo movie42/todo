@@ -4,8 +4,6 @@ import useDeleteTodo from "./hooks/useDeleteTodo";
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
 
-interface ITodoProps {}
-
 const Todo = () => {
   const { todoList, getItem } = useGetTodo();
   const {

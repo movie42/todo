@@ -3,8 +3,6 @@ import { deleteData } from "@/lib/api/api";
 import { useLocalStorage } from "@/lib/hooks";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 
-interface IuseDeleteTodoProps {}
-
 const useDeleteTodo = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { getLocalStorage } = useLocalStorage();

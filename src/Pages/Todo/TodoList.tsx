@@ -1,5 +1,6 @@
 import React from "react";
 import { UpdateTodoData } from "./hooks/useUpdateTodo";
+import { Container, TodoListContainer } from "./Styles";
 import TodoItemContainer from "./TodoItemContainer";
 
 interface ITodoListProps {
@@ -24,8 +25,8 @@ const TodoList = ({
   handleDelete
 }: ITodoListProps) => {
   return (
-    <div>
-      <ul>
+    <Container>
+      <TodoListContainer>
         {todoList.map(({ id, todo, isCompleted, userId }) => (
           <TodoItemContainer
             key={id}
@@ -36,8 +37,8 @@ const TodoList = ({
             handleDelete={handleDelete}
           />
         ))}
-      </ul>
-    </div>
+      </TodoListContainer>
+    </Container>
   );
 };
 

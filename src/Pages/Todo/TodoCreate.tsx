@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form, Label } from "@/Components";
-import styled from "styled-components";
 import { useControlButtonDisabled } from "@/lib/hooks";
-
-const Container = styled.div`
-  box-sizing: border-box;
-  padding: 2rem;
-  width: 100%;
-`;
+import { Container } from "./Styles";
 
 interface ITodoCreateProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>, todo: string) => void;
