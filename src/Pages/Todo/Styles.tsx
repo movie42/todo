@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const TodoListContainer = styled.ul``;
-export const TodoItemContainer = styled.li`
+export const TodoListItem = styled.li`
   margin-bottom: 2rem;
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;

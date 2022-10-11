@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { UpdateTodoData } from "./hooks/useUpdateTodo";
 import TodoEdit from "./TodoEdit";
 import TodoItem from "./TodoItem";
-
+import { TodoListItem } from "./Styles";
 interface ITodoItemProps {
   id: number;
   todo: string;
@@ -24,7 +24,7 @@ const TodoItemContainer = ({
   const [isEdit, setIsEdit] = useState(false);
 
   return (
-    <li>
+    <TodoListItem>
       {isEdit ? (
         <TodoEdit
           id={id}
@@ -43,7 +43,7 @@ const TodoItemContainer = ({
           handleUpdateTodo={handleUpdateTodo}
         />
       )}
-    </li>
+    </TodoListItem>
   );
 };
 
