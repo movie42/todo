@@ -1,33 +1,33 @@
-import React from "react";
-import { AuthenticationFormValue } from "./hooks";
+import { AppContext } from "@/lib/state";
+import { useContext, useEffect } from "react";
+import { useRequestAuthentication } from "./hooks";
 import { Container } from "./Styles";
 
-interface ISignUpProps {
-  email: string;
-  password: string;
-  handleSignup: ({ email, password }: AuthenticationFormValue) => Promise<
-    | {
-        statusCode: any;
-        message: any;
-      }
-    | undefined
-  >;
-  setIsSignUp: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const SignUp = () => {
+  const {
+    auth: { email, password },
+    setAuth
+  } = useContext(AppContext);
 
-const SignUp = ({
-  handleSignup,
-  setIsSignUp,
-  email,
-  password
-}: ISignUpProps) => {
+  const { handleSignup, setIsSignUp, isSuccess, token, isSignUp } =
+    useRequestAuthentication();
+
   const handleConfirm = async () => {
-    await handleSignup({ email, password });
+    if (email && password) {
+      await handleSignup({ email, password });
+    }
   };
 
   const handleCancel = () => {
     setIsSignUp(true);
+    setAuth((pre) => ({ ...pre, isSignUp }));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setAuth((pre) => ({ ...pre, token, isSuccess }));
+    }
+  }, [isSuccess, token]);
 
   return (
     <Container>

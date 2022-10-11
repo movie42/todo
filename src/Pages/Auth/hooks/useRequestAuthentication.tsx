@@ -18,7 +18,7 @@ interface AuthenticationError {
 }
 
 const useRequestAuthentication = () => {
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<ErrorProps | null>(null);
@@ -100,7 +100,8 @@ const useRequestAuthentication = () => {
         statusCode,
         message
       });
-      setIsSignUp(false);
+
+      setIsSignUp(true);
 
       return { statusCode, message };
     }

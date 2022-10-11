@@ -1,40 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Form, Label } from "@/Components";
-import { AuthenticationFormValue, ErrorProps } from "./hooks";
+import { AuthenticationFormValue, useRequestAuthentication } from "./hooks";
 import { Container, FormContainer, FormItemWrapper } from "./Styles";
-import { useControlButtonDisabled } from "@/lib/hooks";
+import { useControlButtonDisabled, useValidate } from "@/lib/hooks";
+import { AppContext } from "@/lib/state";
 
-interface ILoginProps {
-  email: string;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  password: string;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  isEmail: boolean;
-  isPassword: boolean;
-  handleValidate: (value: string, type: "email" | "password") => void;
-  handleSignin: ({ email, password }: AuthenticationFormValue) => Promise<
-    | {
-        statusCode: any;
-        message: any;
-      }
-    | undefined
-  >;
-  isError: boolean;
-  error: ErrorProps | null;
-}
+const Login = () => {
+  const { setAuth } = useContext(AppContext);
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    isEmail,
+    isPassword,
+    handleValidate
+  } = useValidate();
+  const { token, handleSignin, isError, error, isSuccess, isSignUp } =
+    useRequestAuthentication();
 
-const Login = ({
-  handleSignin,
-  isError,
-  error,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  isEmail,
-  isPassword,
-  handleValidate
-}: ILoginProps) => {
   const buttonDisabled = useControlButtonDisabled({
     data: [isEmail, isPassword]
   });
@@ -46,6 +30,18 @@ const Login = ({
     e.preventDefault();
     await handleSignin({ email, password });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setAuth((pre) => ({ ...pre, token, isSuccess }));
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      setAuth((pre) => ({ ...pre, isError, isSignUp, email, password }));
+    }
+  }, [isError]);
 
   return (
     <Container>

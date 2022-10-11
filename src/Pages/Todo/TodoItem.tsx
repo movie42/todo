@@ -1,6 +1,5 @@
 import React from "react";
 import { UpdateTodoData } from "./hooks/useUpdateTodo";
-import { TodoListItem } from "./Styles";
 
 interface ITodoItemProps {
   id: number;
