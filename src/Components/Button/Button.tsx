@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const Containter = styled.button``;
+const Containter = styled.button`
+  cursor: pointer;
+`;
 
 interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 

@@ -4,23 +4,7 @@ import Button from "../Button/Button";
 import Input from "./Input";
 import Label from "./Label";
 
-const Container = styled.form`
-  button {
-    border: 0;
-    border-radius: 1rem;
-    padding: 0.8rem 0.7rem;
-    font-size: 1.7rem;
-  }
-  label {
-    font-size: 1.7rem;
-  }
-  input {
-    width: 100%;
-    border: 0;
-    font-size: 2rem;
-    border-bottom: 1px solid ${(props) => props.theme.color.fontColor};
-  }
-`;
+const Container = styled.form``;
 
 interface IFormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 

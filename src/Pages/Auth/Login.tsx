@@ -1,7 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import { Form, Label } from "@/Components";
 import { AuthenticationFormValue, useRequestAuthentication } from "./hooks";
-import { Container, FormContainer, FormItemWrapper } from "./Styles";
+import {
+  Container,
+  FormContainer,
+  FormItemWrapper,
+  LoginButton,
+  LoginForm,
+  LoginInput,
+  LoginLabel
+} from "./Styles";
 import { useControlButtonDisabled, useValidate } from "@/lib/hooks";
 import { AppContext } from "@/lib/state";
 
@@ -47,10 +55,11 @@ const Login = () => {
     <Container>
       <FormContainer>
         {isError && <Label>{error?.message}</Label>}
-        <Form onSubmit={(e) => handleSubmit(e, { email, password })}>
+        <LoginForm onSubmit={(e) => handleSubmit(e, { email, password })}>
           <FormItemWrapper>
-            <Form.Label>이메일</Form.Label>
-            <Form.Input
+            <LoginLabel>이메일</LoginLabel>
+            <LoginInput
+              isValidate={isEmail}
               type="text"
               placeholder="이메일을 입력해주세요."
               value={email}
@@ -61,8 +70,9 @@ const Login = () => {
             />
           </FormItemWrapper>
           <FormItemWrapper>
-            <Form.Label>비밀번호</Form.Label>
-            <Form.Input
+            <LoginLabel>비밀번호</LoginLabel>
+            <LoginInput
+              isValidate={isPassword}
               type="password"
               placeholder="비밀번호를 입력해주세요."
               value={password}
@@ -72,8 +82,8 @@ const Login = () => {
               }}
             />
           </FormItemWrapper>
-          <Form.Button disabled={buttonDisabled}>로그인</Form.Button>
-        </Form>
+          <LoginButton disabled={buttonDisabled}>로그인</LoginButton>
+        </LoginForm>
       </FormContainer>
     </Container>
   );
