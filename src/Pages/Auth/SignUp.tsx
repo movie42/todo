@@ -1,7 +1,7 @@
 import { AppContext } from "@/lib/state";
 import { useContext, useEffect } from "react";
 import { useRequestAuthentication } from "./hooks";
-import { Container } from "./Styles";
+import { SignUpButton, SignUpContainer } from "./Styles";
 
 const SignUp = () => {
   const {
@@ -30,11 +30,17 @@ const SignUp = () => {
   }, [isSuccess, token]);
 
   return (
-    <Container>
-      <h1>회원이 아니네요. 가입하실래요?</h1>
-      <button onClick={handleCancel}>아니요</button>
-      <button onClick={handleConfirm}>네</button>
-    </Container>
+    <SignUpContainer>
+      <h2>회원이 아닙니다. 가입하실래요?</h2>
+      <div>
+        <SignUpButton className="cancel" onClick={handleCancel}>
+          아니요
+        </SignUpButton>
+        <SignUpButton className="confirm" onClick={handleConfirm}>
+          네
+        </SignUpButton>
+      </div>
+    </SignUpContainer>
   );
 };
 

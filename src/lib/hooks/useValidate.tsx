@@ -30,7 +30,9 @@ const useValidate = () => {
     setPassword,
     isEmail,
     isPassword,
-    handleValidate
+    handleValidate,
+    setIsEmail,
+    setIsPassword
   };
 };
 

@@ -28,7 +28,7 @@ const Authentication = () => {
 
   return (
     <AuthenticationContainer>
-      <HeadTitleContainer>
+      <HeadTitleContainer isSignUp={isSignUp}>
         <h1>지금 당장</h1>
         <p>당신의 삶을 효과적으로 관리하는 방법. 지금 시작해보세요.</p>
       </HeadTitleContainer>
