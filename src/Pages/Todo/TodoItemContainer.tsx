@@ -14,7 +14,7 @@ const TodoItemContainer = ({ id, todo, isCompleted }: ITodoItemProps) => {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
-    <TodoListItem>
+    <TodoListItem isEdit={isEdit}>
       {isEdit ? (
         <TodoEdit
           id={id}

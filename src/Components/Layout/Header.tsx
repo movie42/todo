@@ -1,9 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-import { useLocalStorage } from "@/lib/hooks";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 import { AppContext } from "@/lib/state";
 
 const Container = styled.header`
@@ -13,12 +10,22 @@ const Container = styled.header`
   justify-content: space-between;
   font-size: 2rem;
   height: 6rem;
-  color: #fff;
-  background-color: black;
-  padding: 1rem;
+  padding: 1rem 2rem;
 
+  h1 {
+    color: ${(props) => props.theme.color.main};
+    font-weight: bolder;
+  }
   a {
-    color: white;
+    font-size: 1.6rem;
+    color: ${(props) => props.theme.color.fontBlack};
+    padding: 1rem 2rem;
+    &:hover {
+      color: ${(props) => props.theme.color.fontWhite};
+      background-color: ${(props) => props.theme.color.main};
+      font-weight: bolder;
+      border-radius: 0.7rem;
+    }
   }
 `;
 
@@ -29,7 +36,7 @@ const Header = () => {
 
   return (
     <Container>
-      <h1>할 일이 무엇인가요?</h1>
+      <h1>지금당장</h1>
       {isLogin && <Link to="/logout">로그아웃</Link>}
     </Container>
   );

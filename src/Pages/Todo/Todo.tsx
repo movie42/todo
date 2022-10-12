@@ -1,6 +1,7 @@
 import { AppContext } from "@/lib/state";
 import { useContext, useEffect } from "react";
 import { useGetTodo } from "./hooks";
+import { TodoContainer } from "./Styles";
 
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
@@ -19,10 +20,10 @@ const Todo = () => {
   }, [isSuccess]);
 
   return (
-    <div>
+    <TodoContainer>
       <TodoCreate />
       <TodoList todoList={todoList} />
-    </div>
+    </TodoContainer>
   );
 };
 

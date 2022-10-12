@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Containter = styled.button`
   cursor: pointer;
   border: 0;
-  background-color: ${(props) => props.theme.color.gray};
+  background-color: ${(props) => props.theme.color.gray100};
   border-radius: 1rem;
   font-size: 2rem;
   color: #424242;

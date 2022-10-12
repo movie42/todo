@@ -33,19 +33,18 @@ const TodoItem = ({ id, isCompleted, todo, setIsEdit }: ITodoItemProps) => {
 
   return (
     <>
+      <button
+        className={isCompleted ? "complete" : "complete-unset"}
+        onClick={(e) =>
+          handleUpdateTodo(e, { id, isCompleted: !isCompleted, todo })
+        }></button>
       <h3>{todo}</h3>
+
       <button className="edit" onClick={() => setIsEdit(true)}>
         수정
       </button>
       <button className="delete" onClick={() => handleDelete(id)}>
         삭제
-      </button>
-      <button
-        className={isCompleted ? "complete" : ""}
-        onClick={(e) =>
-          handleUpdateTodo(e, { id, isCompleted: !isCompleted, todo })
-        }>
-        완료
       </button>
     </>
   );

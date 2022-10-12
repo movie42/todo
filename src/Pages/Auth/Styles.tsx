@@ -1,6 +1,15 @@
 import { Button, Form, Label } from "@/Components";
 import styled, { css, keyframes } from "styled-components";
 
+const opacityAnimation = keyframes`
+  from {
+    opacity: 0;
+  } 
+  to{
+    opacity: 1;
+  }
+`;
+
 export const AuthenticationContainer = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -18,12 +27,12 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-const opacityAnimation = keyframes`
-  from {
-    opacity: 0;
-  } 
-  to{
-    opacity: 1;
+export const LogoutContainer = styled(Container)`
+  height: 100vh;
+  h1 {
+    font-size: 6rem;
+    font-weight: bolder;
+    animation: ${opacityAnimation} 0.5s ease-in;
   }
 `;
 
@@ -50,15 +59,16 @@ export const SignUpContainer = styled(Container)<{ isSignUp?: boolean }>`
       background-color: ${(props) => props.theme.color.main};
       color: #fff;
       &:hover {
-        background-color: #c12d00;
+        background-color: ${(props) => props.theme.color.mainHover};
       }
     }
     button.cancel {
-      background-color: ${(props) => props.theme.color.gray};
+      background-color: ${(props) => props.theme.color.gray100};
       width: 15rem;
-      color: #6b6b6b;
+      color: ${(props) => props.theme.color.gray200};
       &:hover {
-        background-color: #a7a7a7;
+        color: ${(props) => props.theme.color.gray100};
+        background-color: ${(props) => props.theme.color.gray200};
       }
     }
   }
@@ -165,9 +175,9 @@ export const LoginInput = styled(Form.Input)<{ isValidate?: boolean }>`
       return css`
         box-sizing: border-box;
         color: ${theme.color.success};
-        border: 1px solid #434343 !important;
+        border: 1px solid ${theme.color.gray200} !important;
         border-radius: 0.8rem;
-        background-color: #434343;
+        background-color: ${theme.color.gray200};
         transition: all 0.4s ease-in-out;
       `;
     } else {
@@ -194,18 +204,19 @@ export const LoginButton = styled(Form.Button)`
 
         &:hover {
           color: ${theme.color.fontWhite};
-          background-color: #c40000;
+          background-color: ${theme.color.mainHover};
         }
 
         &:active {
           color: ${theme.color.main};
-          background-color: ${theme.color.gray};
+          background-color: ${theme.color.gray100};
         }
       `;
     } else {
       return css`
+        cursor: unset;
         transition: all 0.4s ease-in-out;
-        background-color: ${theme.color.gray};
+        background-color: ${theme.color.gray100};
       `;
     }
   }}

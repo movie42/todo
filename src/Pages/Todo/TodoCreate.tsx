@@ -1,7 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { Form, Label } from "@/Components";
 import { useControlButtonDisabled } from "@/lib/hooks";
-import { Container } from "./Styles";
+import {
+  TodoButton,
+  TodoCreateContainer,
+  TodoFormItemContainer,
+  TodoInput,
+  TodoLabel
+} from "./Styles";
 import { useCreateTodo } from "./hooks";
 import { AppContext } from "@/lib/state";
 
@@ -36,21 +42,23 @@ const TodoCreate = () => {
   }, [isSuccess]);
 
   return (
-    <Container>
+    <TodoCreateContainer>
       {isError && <Label>{error?.message}</Label>}
       <Form onSubmit={handleSubmit}>
-        <Form.Label>내용</Form.Label>
-        <Form.Input
-          type="text"
-          placeholder="무엇을 해야하나요?"
-          value={todo}
-          onChange={(e) => {
-            setTodo(e.currentTarget.value);
-          }}
-        />
-        <Form.Button disabled={buttonDisabled}>할 일 만들기</Form.Button>
+        <TodoFormItemContainer>
+          <TodoLabel>내용</TodoLabel>
+          <TodoInput
+            type="text"
+            placeholder="무엇을 해야하나요?"
+            value={todo}
+            onChange={(e) => {
+              setTodo(e.currentTarget.value);
+            }}
+          />
+        </TodoFormItemContainer>
+        <TodoButton disabled={buttonDisabled}>할 일 만들기</TodoButton>
       </Form>
-    </Container>
+    </TodoCreateContainer>
   );
 };
 
