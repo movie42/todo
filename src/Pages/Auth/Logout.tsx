@@ -2,9 +2,7 @@ import { useLocalStorage } from "@/lib/hooks";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container } from "./Styles";
-
-interface ILogoutProps {}
+import { LogoutContainer } from "./Styles";
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -18,9 +16,9 @@ const Logout = () => {
   }, []);
 
   return (
-    <Container>
-      <h1>안녕히가세요!</h1>
-    </Container>
+    <LogoutContainer>
+      <h1>안녕히가세요 🥲</h1>
+    </LogoutContainer>
   );
 };
 
