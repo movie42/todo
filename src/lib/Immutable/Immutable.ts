@@ -3,6 +3,4 @@ export const REG_EXP = {
   password: "^.{8,}"
 };
 export const LOCAL_STORAGE_KEY = "WANTED_TODO_STORE";
-export const BASE_URL = "http://localhost:8000";
-
-// "https://pre-onboarding-selection-task.shop/";
+export const BASE_URL = "https://pre-onboarding-selection-task.shop/";
