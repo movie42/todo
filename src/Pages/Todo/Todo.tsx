@@ -1,51 +1,27 @@
-import { useEffect } from "react";
-import { useCreateTodo, useGetTodo, useUpdateTodo } from "./hooks";
-import useDeleteTodo from "./hooks/useDeleteTodo";
+import { AppContext } from "@/lib/state";
+import { useContext, useEffect } from "react";
+import { useGetTodo } from "./hooks";
+
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
 
 const Todo = () => {
-  const { todoList, getItem } = useGetTodo();
   const {
-    handleCreateTodoContents,
-    isSuccess: isCreateSuccess,
-    isError,
-    error
-  } = useCreateTodo();
-  const { handleUpdateTodo, isSuccess: isUpdateSuccess } = useUpdateTodo();
-  const { handleDelete, isSuccess: isDeleteSuccess } = useDeleteTodo();
+    todo: { isSuccess }
+  } = useContext(AppContext);
+
+  const { todoList, getItem } = useGetTodo();
 
   useEffect(() => {
-    if (isCreateSuccess) {
+    if (isSuccess) {
       getItem();
     }
-  }, [isCreateSuccess]);
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      getItem();
-    }
-  }, [isUpdateSuccess]);
-
-  useEffect(() => {
-    if (isDeleteSuccess) {
-      getItem();
-    }
-  }, [isDeleteSuccess]);
+  }, [isSuccess]);
 
   return (
     <div>
-      <TodoCreate
-        isError={isError}
-        error={error}
-        isSuccess={isCreateSuccess}
-        onSubmit={handleCreateTodoContents}
-      />
-      <TodoList
-        todoList={todoList}
-        handleUpdateTodo={handleUpdateTodo}
-        handleDelete={handleDelete}
-      />
+      <TodoCreate />
+      <TodoList todoList={todoList} />
     </div>
   );
 };

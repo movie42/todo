@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, Label } from "@/Components";
 import { useControlButtonDisabled } from "@/lib/hooks";
 import { Container } from "./Styles";
+import { useCreateTodo } from "./hooks";
+import { AppContext } from "@/lib/state";
 
-interface ITodoCreateProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>, todo: string) => void;
-  isSuccess: boolean;
-  isError: boolean;
-  error: { statusCode: number; message: string } | null;
-}
+const TodoCreate = () => {
+  const { setTodo: setContextTodo } = useContext(AppContext);
 
-const TodoCreate = ({
-  isSuccess,
-  onSubmit,
-  isError,
-  error
-}: ITodoCreateProps) => {
+  const { handleCreateTodoContents, isSuccess, isError, error } =
+    useCreateTodo();
   const [todo, setTodo] = useState("");
   const [isTodo, setIsTodo] = useState(false);
   const buttonDisabled = useControlButtonDisabled({ data: [isTodo] });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    onSubmit(e, todo);
+    handleCreateTodoContents(e, todo);
   };
 
   useEffect(() => {
@@ -35,6 +29,7 @@ const TodoCreate = ({
   useEffect(() => {
     if (isSuccess) {
       setTodo("");
+      setContextTodo((pre) => ({ ...pre, isSuccess }));
     }
   }, [isSuccess]);
 

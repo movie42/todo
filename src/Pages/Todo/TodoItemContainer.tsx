@@ -1,26 +1,16 @@
-import React, { useState } from "react";
-import { UpdateTodoData } from "./hooks/useUpdateTodo";
+import { useState } from "react";
+
 import TodoEdit from "./TodoEdit";
 import TodoItem from "./TodoItem";
 import { TodoListItem } from "./Styles";
+
 interface ITodoItemProps {
   id: number;
   todo: string;
   isCompleted: boolean;
-  handleUpdateTodo: (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
-    data: UpdateTodoData
-  ) => Promise<void>;
-  handleDelete: (id: number) => Promise<void>;
 }
 
-const TodoItemContainer = ({
-  id,
-  todo,
-  isCompleted,
-  handleUpdateTodo,
-  handleDelete
-}: ITodoItemProps) => {
+const TodoItemContainer = ({ id, todo, isCompleted }: ITodoItemProps) => {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
@@ -31,7 +21,6 @@ const TodoItemContainer = ({
           todo={todo}
           isCompleted={isCompleted}
           setIsEdit={setIsEdit}
-          handleUpdateTodo={handleUpdateTodo}
         />
       ) : (
         <TodoItem
@@ -39,8 +28,6 @@ const TodoItemContainer = ({
           isCompleted={isCompleted}
           todo={todo}
           setIsEdit={setIsEdit}
-          handleDelete={handleDelete}
-          handleUpdateTodo={handleUpdateTodo}
         />
       )}
     </TodoListItem>

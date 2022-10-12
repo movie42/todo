@@ -1,26 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form } from "@/Components";
-import { UpdateTodoData } from "./hooks/useUpdateTodo";
+import useUpdateTodo, { UpdateTodoData } from "./hooks/useUpdateTodo";
+import { AppContext } from "@/lib/state";
 
 interface ITodoEditProps {
   id: number;
   todo: string;
   isCompleted: boolean;
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
-  handleUpdateTodo: (
-    e: React.FormEvent<HTMLFormElement>,
-    data: UpdateTodoData
-  ) => Promise<void>;
 }
 
-const TodoEdit = ({
-  id,
-  todo,
-  isCompleted,
-  setIsEdit,
-  handleUpdateTodo
-}: ITodoEditProps) => {
+const TodoEdit = ({ id, todo, isCompleted, setIsEdit }: ITodoEditProps) => {
+  const { setTodo } = useContext(AppContext);
   const [editTodo, setEditTodo] = useState(todo);
+  const { handleUpdateTodo, isSuccess: isUpdateSuccess } = useUpdateTodo();
 
   const handleCancelTodoEdit = () => {
     setEditTodo(todo);
@@ -32,6 +25,18 @@ const TodoEdit = ({
     handleUpdateTodo(e, { id, todo: editTodo, isCompleted });
     setIsEdit(false);
   };
+
+  useEffect(() => {
+    setTodo((pre) => ({ ...pre, isSuccess: false }));
+  }, []);
+
+  // TODO: 동작하지 않음 수정해야합니다
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      console.log(isUpdateSuccess);
+      setTodo({ isSuccess: isUpdateSuccess });
+    }
+  }, [isUpdateSuccess]);
 
   return (
     <Form onSubmit={handleEditTodo}>
