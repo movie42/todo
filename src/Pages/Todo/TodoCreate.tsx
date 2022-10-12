@@ -7,9 +7,9 @@ import { AppContext } from "@/lib/state";
 
 const TodoCreate = () => {
   const { setTodo: setContextTodo } = useContext(AppContext);
-
   const { handleCreateTodoContents, isSuccess, isError, error } =
     useCreateTodo();
+
   const [todo, setTodo] = useState("");
   const [isTodo, setIsTodo] = useState(false);
   const buttonDisabled = useControlButtonDisabled({ data: [isTodo] });
@@ -30,6 +30,8 @@ const TodoCreate = () => {
     if (isSuccess) {
       setTodo("");
       setContextTodo((pre) => ({ ...pre, isSuccess }));
+    } else {
+      setContextTodo((pre) => ({ ...pre, isSuccess: false }));
     }
   }, [isSuccess]);
 

@@ -4,11 +4,17 @@ import { useLocalStorage } from "@/lib/hooks";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 
 const useDeleteTodo = () => {
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<{
+    statusCode?: number;
+    message?: string;
+  } | null>(null);
   const { getLocalStorage } = useLocalStorage();
 
   const handleDelete = async (id: number) => {
-    setIsSuccess(false);
+    setIsSuccess(null);
+
     const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
 
     if (token) {
@@ -16,18 +22,19 @@ const useDeleteTodo = () => {
 
       if (response.status === 204) {
         setIsSuccess(true);
+        setIsError(false);
         return;
       }
 
-      setIsSuccess(false);
+      setIsError(true);
+      setError({
+        statusCode: response.status,
+        message: "삭제에 실패하였습니다."
+      });
     }
   };
 
-  useEffect(() => {
-    setIsSuccess(false);
-  }, []);
-
-  return { handleDelete, isSuccess };
+  return { handleDelete, isSuccess, error, isError };
 };
 
 export default useDeleteTodo;

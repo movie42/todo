@@ -4,12 +4,12 @@ import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
 import { useLocalStorage } from "@/lib/hooks";
 
 const useCreateTodo = () => {
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<{
     statusCode: number;
     message: string;
   } | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
   const { getLocalStorage } = useLocalStorage();
 
   const handleCreateTodoContents = async (
@@ -17,7 +17,7 @@ const useCreateTodo = () => {
     todo: string
   ) => {
     e.preventDefault();
-    setIsSuccess(false);
+    setIsSuccess(null);
 
     const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
 
@@ -30,7 +30,6 @@ const useCreateTodo = () => {
 
       if (response.id) {
         setIsSuccess(true);
-        setIsError(false);
         return;
       }
 
@@ -40,9 +39,9 @@ const useCreateTodo = () => {
         }
       } = response;
 
+      setIsSuccess(false);
       setError({ statusCode, message });
       setIsError(true);
-      setIsSuccess(false);
     }
   };
 
