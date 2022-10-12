@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/lib/Immutable/Immutable";
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 export const instance = axios.create({
   baseURL: BASE_URL
@@ -15,11 +15,11 @@ interface IAPIPostValue<TData, TError> extends IAPIValue {
   data: TData;
 }
 
-interface IAPIPutValue<T> extends IAPIValue {
-  data: T;
+interface IAPIPutValue<TData, TError> extends IAPIValue {
+  data: TData;
 }
 
-interface IAPIDeleteValue extends IAPIValue {}
+interface IAPIDeleteValue<TError> extends IAPIValue {}
 
 export const getData = async ({ url, token, config }: IAPIValue) => {
   try {
@@ -32,10 +32,7 @@ export const getData = async ({ url, token, config }: IAPIValue) => {
 
     return response.data;
   } catch (error) {
-    const responseError = error as AxiosError<{
-      statusCode: number;
-      message: string;
-    }>;
+    const responseError = error as AxiosError;
     return responseError;
   }
 };
@@ -62,12 +59,12 @@ export const postData = async <TData, TError extends unknown>({
   }
 };
 
-export const putData = async <T extends unknown>({
+export const putData = async <TData, TError extends unknown>({
   url,
   data,
   token,
   config
-}: IAPIPutValue<T>) => {
+}: IAPIPutValue<TData, TError>) => {
   try {
     const response = await instance.put(url, data, {
       headers: {
@@ -77,18 +74,19 @@ export const putData = async <T extends unknown>({
       ...config
     });
 
-    return response;
+    return response.data;
   } catch (error) {
-    const responseError = error as AxiosError<{
-      statusCode: number;
-      message: string;
-    }>;
+    const responseError = error as AxiosError<TError>;
 
     return responseError;
   }
 };
 
-export const deleteData = async ({ url, token, config }: IAPIDeleteValue) => {
+export const deleteData = async <TError extends unknown>({
+  url,
+  token,
+  config
+}: IAPIDeleteValue<TError>) => {
   try {
     const response = await instance.delete(url, {
       headers: {
@@ -100,10 +98,7 @@ export const deleteData = async ({ url, token, config }: IAPIDeleteValue) => {
 
     return { status: response.status };
   } catch (error) {
-    const responseError = error as AxiosError<{
-      statusCode: number;
-      message: string;
-    }>;
+    const responseError = error as AxiosError<TError>;
 
     return responseError;
   }

@@ -32,23 +32,18 @@ const useGetTodo = () => {
 
     if (token) {
       const response = await getData({ url: "/todos", token });
-      setTodoList([...response]);
 
-      setIsLoading(false);
-      setIsSuccess(true);
-
-      if (response.responseError) {
+      if (!response.length) {
         setIsLoading(false);
         setIsSuccess(false);
-        throw new Error(response.responseError.message);
+        setTodoList([]);
+        return;
       }
 
-      return response;
+      setTodoList([...response]);
+      setIsLoading(false);
+      setIsSuccess(true);
     }
-
-    setIsLoading(false);
-    setIsSuccess(false);
-    return [];
   };
 
   useEffect(() => {

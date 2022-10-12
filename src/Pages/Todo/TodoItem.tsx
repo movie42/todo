@@ -18,14 +18,19 @@ const TodoItem = ({ id, isCompleted, todo, setIsEdit }: ITodoItemProps) => {
   useEffect(() => {
     if (isUpdateSuccess) {
       setTodo((pre) => ({ ...pre, isSuccess: isUpdateSuccess }));
+    } else {
+      setTodo((pre) => ({ ...pre, isSuccess: false }));
     }
   }, [isUpdateSuccess]);
 
   useEffect(() => {
     if (isDeleteSuccess) {
       setTodo((pre) => ({ ...pre, isSuccess: isDeleteSuccess }));
+    } else {
+      setTodo((pre) => ({ ...pre, isSuccess: false }));
     }
   }, [isDeleteSuccess]);
+
   return (
     <>
       <h3>{todo}</h3>
@@ -36,7 +41,7 @@ const TodoItem = ({ id, isCompleted, todo, setIsEdit }: ITodoItemProps) => {
         삭제
       </button>
       <button
-        className="complete"
+        className={isCompleted ? "complete" : ""}
         onClick={(e) =>
           handleUpdateTodo(e, { id, isCompleted: !isCompleted, todo })
         }>

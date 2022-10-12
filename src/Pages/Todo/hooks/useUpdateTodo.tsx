@@ -10,7 +10,12 @@ export interface UpdateTodoData {
 }
 
 const useUpdateTodo = () => {
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<{
+    statusCode: number;
+    message: string;
+  } | null>(null);
   const { getLocalStorage } = useLocalStorage();
 
   const handleUpdateTodo = async (
@@ -18,7 +23,7 @@ const useUpdateTodo = () => {
     { id, todo, isCompleted }: UpdateTodoData
   ) => {
     e.preventDefault();
-    setIsSuccess(false);
+    setIsSuccess(null);
 
     const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
 
@@ -29,20 +34,24 @@ const useUpdateTodo = () => {
         token
       });
 
-      if (response) {
+      if (response.id) {
         setIsSuccess(true);
         return;
       }
 
+      const {
+        response: {
+          data: { statusCode, message }
+        }
+      } = response;
+
       setIsSuccess(false);
+      setError({ statusCode, message });
+      setIsError(true);
     }
   };
 
-  useEffect(() => {
-    setIsSuccess(false);
-  }, []);
-
-  return { isSuccess, handleUpdateTodo };
+  return { isSuccess, handleUpdateTodo, isError, error };
 };
 
 export default useUpdateTodo;
