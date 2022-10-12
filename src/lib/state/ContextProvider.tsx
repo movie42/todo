@@ -17,18 +17,23 @@ interface IAuthProps {
   isLogin?: boolean;
 }
 
-interface ITodoProps {
+interface TodoData {
   id?: number;
   todo?: string;
   isCompleted?: boolean;
   userId?: number;
 }
 
+interface Todo {
+  data?: TodoData[];
+  isSuccess?: boolean;
+}
+
 interface AppContext {
   auth: IAuthProps;
   setAuth: React.Dispatch<React.SetStateAction<IAuthProps>>;
-  todo: ITodoProps[] | null;
-  setTodo: React.Dispatch<React.SetStateAction<ITodoProps[] | null>>;
+  todo: Todo;
+  setTodo: React.Dispatch<React.SetStateAction<Todo>>;
 }
 
 export const AppContext = React.createContext<AppContext>(null!);
@@ -44,9 +49,13 @@ const authDefault = {
   isError: false,
   isLogin: false
 };
+const todoDefault = {
+  isSuccess: false,
+  data: undefined
+};
 const ContextProvider = ({ children }: ContextProps) => {
   const [auth, setAuth] = useState<IAuthProps>(authDefault);
-  const [todo, setTodo] = useState<ITodoProps[] | null>(null);
+  const [todo, setTodo] = useState<Todo>(todoDefault);
 
   const value = {
     auth,
