@@ -20,12 +20,13 @@ interface AuthenticationError {
 const useRequestAuthentication = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState<boolean | null>(null);
   const [error, setError] = useState<ErrorProps | null>(null);
   const [token, setToken] = useState("");
 
   const handleSignup = async ({ email, password }: AuthenticationFormValue) => {
     setIsSuccess(false);
+    setIsError(null);
 
     const response = await postData<
       AuthenticationFormValue,
@@ -118,7 +119,8 @@ const useRequestAuthentication = () => {
     isError,
     isSuccess,
     isSignUp,
-    setIsSignUp
+    setIsSignUp,
+    setIsError
   };
 };
 

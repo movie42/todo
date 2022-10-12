@@ -6,6 +6,7 @@ import {
   FormContainer,
   FormItemWrapper,
   LoginButton,
+  LoginErrorLabel,
   LoginForm,
   LoginInput,
   LoginLabel
@@ -22,10 +23,19 @@ const Login = () => {
     setPassword,
     isEmail,
     isPassword,
-    handleValidate
+    handleValidate,
+    setIsEmail,
+    setIsPassword
   } = useValidate();
-  const { token, handleSignin, isError, error, isSuccess, isSignUp } =
-    useRequestAuthentication();
+  const {
+    token,
+    handleSignin,
+    isError,
+    error,
+    isSuccess,
+    isSignUp,
+    setIsError
+  } = useRequestAuthentication();
 
   const buttonDisabled = useControlButtonDisabled({
     data: [isEmail, isPassword]
@@ -46,15 +56,31 @@ const Login = () => {
   }, [isSuccess]);
 
   useEffect(() => {
+    if (isError === null) {
+      return;
+    }
+
     if (isError) {
+      setIsEmail(false);
+      setIsPassword(false);
       setAuth((pre) => ({ ...pre, isError, isSignUp, email, password }));
+    } else {
+      setAuth((pre) => ({ ...pre, isError: false }));
     }
   }, [isError]);
+
+  useEffect(() => {
+    setIsError(null);
+    if (isEmail && isPassword) {
+      return;
+    }
+    setIsError(true);
+  }, [isEmail, isPassword]);
 
   return (
     <Container>
       <FormContainer>
-        {isError && <Label>{error?.message}</Label>}
+        <LoginErrorLabel isError={isError}>{error?.message}</LoginErrorLabel>
         <LoginForm onSubmit={(e) => handleSubmit(e, { email, password })}>
           <FormItemWrapper>
             <LoginLabel>이메일</LoginLabel>
