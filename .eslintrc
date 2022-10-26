@@ -18,6 +18,10 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "react/no-children-prop": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-empty-interface": "off",
     "no-var": "error",
     "no-multiple-empty-lines": "error",
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
