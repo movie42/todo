@@ -37,7 +37,8 @@ const TodoItem = ({ id, isCompleted, todo, setIsEdit }: ITodoItemProps) => {
         className={isCompleted ? "complete" : "complete-unset"}
         onClick={(e) =>
           handleUpdateTodo(e, { id, isCompleted: !isCompleted, todo })
-        }></button>
+        }
+      ></button>
       <h3>{todo}</h3>
 
       <button className="edit" onClick={() => setIsEdit(true)}>

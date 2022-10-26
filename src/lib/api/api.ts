@@ -11,15 +11,15 @@ interface IAPIValue {
   config?: AxiosRequestConfig;
 }
 
-interface IAPIPostValue<TData, TError> extends IAPIValue {
+interface IAPIPostValue<TData> extends IAPIValue {
   data: TData;
 }
 
-interface IAPIPutValue<TData, TError> extends IAPIValue {
+interface IAPIPutValue<TData> extends IAPIValue {
   data: TData;
 }
 
-interface IAPIDeleteValue<TError> extends IAPIValue {}
+interface IAPIDeleteValue extends IAPIValue {}
 
 export const getData = async ({ url, token, config }: IAPIValue) => {
   try {
@@ -37,12 +37,12 @@ export const getData = async ({ url, token, config }: IAPIValue) => {
   }
 };
 
-export const postData = async <TData, TError extends unknown>({
+export const postData = async <TData>({
   url,
   data,
   token,
   config
-}: IAPIPostValue<TData, TError>) => {
+}: IAPIPostValue<TData>) => {
   try {
     const response = await instance.post(url, data, {
       headers: {
@@ -53,18 +53,18 @@ export const postData = async <TData, TError extends unknown>({
 
     return response.data;
   } catch (error) {
-    const responseError = error as AxiosError<TError>;
+    const responseError = error as AxiosError;
 
     return responseError;
   }
 };
 
-export const putData = async <TData, TError extends unknown>({
+export const putData = async <TData>({
   url,
   data,
   token,
   config
-}: IAPIPutValue<TData, TError>) => {
+}: IAPIPutValue<TData>) => {
   try {
     const response = await instance.put(url, data, {
       headers: {
@@ -76,17 +76,13 @@ export const putData = async <TData, TError extends unknown>({
 
     return response.data;
   } catch (error) {
-    const responseError = error as AxiosError<TError>;
+    const responseError = error as AxiosError;
 
     return responseError;
   }
 };
 
-export const deleteData = async <TError extends unknown>({
-  url,
-  token,
-  config
-}: IAPIDeleteValue<TError>) => {
+export const deleteData = async ({ url, token, config }: IAPIDeleteValue) => {
   try {
     const response = await instance.delete(url, {
       headers: {
@@ -98,7 +94,7 @@ export const deleteData = async <TError extends unknown>({
 
     return { status: response.status };
   } catch (error) {
-    const responseError = error as AxiosError<TError>;
+    const responseError = error as AxiosError;
 
     return responseError;
   }

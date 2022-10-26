@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { deleteData } from "@/lib/api/api";
 import { useLocalStorage } from "@/lib/hooks";
 import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";

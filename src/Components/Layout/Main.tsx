@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 const Container = styled.main``;
 
-interface IMainProps {}
-
 const Main = () => {
   return (
     <Container>
