@@ -11,12 +11,6 @@ export interface ErrorProps {
   message: string;
 }
 
-interface AuthenticationError {
-  response: {
-    data: ErrorProps;
-  };
-}
-
 const useRequestAuthentication = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -28,10 +22,7 @@ const useRequestAuthentication = () => {
     setIsSuccess(false);
     setIsError(null);
 
-    const response = await postData<
-      AuthenticationFormValue,
-      AuthenticationError
-    >({
+    const response = await postData<AuthenticationFormValue>({
       url: "/auth/signup",
       data: {
         email,
@@ -63,10 +54,7 @@ const useRequestAuthentication = () => {
   const handleSignin = async ({ email, password }: AuthenticationFormValue) => {
     setIsSuccess(false);
 
-    const response = await postData<
-      AuthenticationFormValue,
-      AuthenticationError
-    >({
+    const response = await postData<AuthenticationFormValue>({
       url: "/auth/signin",
       data: {
         email,

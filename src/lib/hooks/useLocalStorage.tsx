@@ -1,7 +1,3 @@
-import React from "react";
-
-interface IuseLocalStorageProps {}
-
 const useLocalStorage = () => {
   const getLocalStorage = (name: string) => {
     const getItem = localStorage.getItem(name);
@@ -11,7 +7,7 @@ const useLocalStorage = () => {
     return null;
   };
 
-  const setLocalStorage = <T extends unknown>(name: string, item: T) => {
+  const setLocalStorage = <T,>(name: string, item: T) => {
     const setItem = localStorage.setItem(name, JSON.stringify(item));
     return setItem;
   };
