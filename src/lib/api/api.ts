@@ -19,7 +19,7 @@ interface IAPIPutValue<TData> extends IAPIValue {
   data: TData;
 }
 
-interface IAPIDeleteValue extends IAPIValue {}
+type IAPIDeleteValue = IAPIValue;
 
 export const getData = async ({ url, token, config }: IAPIValue) => {
   try {
