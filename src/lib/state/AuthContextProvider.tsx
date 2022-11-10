@@ -1,7 +1,7 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
 import AuthService, { IAuthService } from "@/Service/AuthService";
 import AxiosHTTPClient from "../api/axiosApiClient";
-import { BASE_URL } from "../Immutable";
+import { BASE_URL } from "../constants";
 
 const AuthContext = createContext<IAuthService>(null!);
 
@@ -10,8 +10,12 @@ const authService = new AuthService(httpClient);
 
 export const useAuthContext = () => useContext(AuthContext);
 
-const AuthContextProvider = () => {
-  return <AuthContext.Provider value={authService}></AuthContext.Provider>;
+interface IAuthContextProps {
+  children: ReactNode;
+}
+
+const AuthContextProvider = ({ children }: IAuthContextProps) => {
+  return <AuthContext.Provider value={authService} children={children} />;
 };
 
 export default AuthContextProvider;

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocalStorage } from "@/lib/hooks";
 
 import { useNavigate } from "react-router-dom";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 
 import Login from "./Login";
 import SignUp from "./SignUp";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { deleteData } from "@/lib/api/api";
 import { useLocalStorage } from "@/lib/hooks";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 
 const useDeleteTodo = () => {
   const [isSuccess, setIsSuccess] = useState<boolean | null>(false);

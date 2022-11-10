@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/lib/Immutable/Immutable";
+import { BASE_URL } from "@/lib/constants/constants";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 export const instance = axios.create({

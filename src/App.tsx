@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./lib/hooks";
-import { LOCAL_STORAGE_KEY } from "./lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "./lib/constants";
 import { useAppContext } from "./lib/state";
 import Router from "./Routes/Router";
 
