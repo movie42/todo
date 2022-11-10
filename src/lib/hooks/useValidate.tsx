@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { REG_EXP } from "../Immutable";
+import { REG_EXP } from "../constants";
 
 const useValidate = () => {
   const [email, setEmail] = useState("");

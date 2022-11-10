@@ -5,6 +5,7 @@ import App from "./App";
 import { GlobalStyle, theme } from "@/lib/styles";
 import { ContextProvider } from "@/lib/state";
 import { BrowserRouter } from "react-router-dom";
+import AuthContextProvider from "./lib/state/AuthContextProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,7 +16,9 @@ root.render(
       <ContextProvider>
         <GlobalStyle />
         <BrowserRouter>
-          <App />
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
         </BrowserRouter>
       </ContextProvider>
     </ThemeProvider>

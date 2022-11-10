@@ -1,12 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./lib/hooks";
-import { LOCAL_STORAGE_KEY } from "./lib/Immutable";
-import { AppContext } from "./lib/state";
+import { LOCAL_STORAGE_KEY } from "./lib/constants";
+import { useAppContext } from "./lib/state";
 import Router from "./Routes/Router";
 
 function App() {
-  const { setAuth } = useContext(AppContext);
+  const { setAuth } = useAppContext();
   const { getLocalStorage } = useLocalStorage();
   const navigate = useNavigate();
 

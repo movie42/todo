@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@/lib/hooks";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogoutContainer } from "./Styles";

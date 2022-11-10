@@ -1,5 +1,5 @@
 import { getData } from "@/lib/api/api";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 import { useLocalStorage } from "@/lib/hooks";
 import { useEffect, useState } from "react";
 

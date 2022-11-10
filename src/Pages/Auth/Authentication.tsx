@@ -1,19 +1,19 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocalStorage } from "@/lib/hooks";
 
 import { useNavigate } from "react-router-dom";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 
 import Login from "./Login";
 import SignUp from "./SignUp";
-import { AppContext } from "@/lib/state";
+import { useAppContext } from "@/lib/state";
 import { AuthenticationContainer, HeadTitleContainer } from "./Styles";
 
 const Authentication = () => {
   const {
     auth: { isSuccess, token, isSignUp },
     setAuth
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const navigate = useNavigate();
   const { setLocalStorage } = useLocalStorage();

@@ -1,6 +1,6 @@
 import { putData } from "@/lib/api/api";
 import { useLocalStorage } from "@/lib/hooks";
-import { LOCAL_STORAGE_KEY } from "@/lib/Immutable";
+import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 import React, { useState } from "react";
 
 export interface UpdateTodoData {

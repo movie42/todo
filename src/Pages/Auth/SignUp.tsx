@@ -1,5 +1,5 @@
-import { AppContext } from "@/lib/state";
-import { useContext, useEffect } from "react";
+import { useAppContext } from "@/lib/state";
+import { useEffect } from "react";
 import { useRequestAuthentication } from "./hooks";
 import { SignUpButton, SignUpContainer } from "./Styles";
 
@@ -7,7 +7,7 @@ const SignUp = () => {
   const {
     auth: { email, password },
     setAuth
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const { handleSignup, setIsSignUp, isSuccess, token, isSignUp } =
     useRequestAuthentication();

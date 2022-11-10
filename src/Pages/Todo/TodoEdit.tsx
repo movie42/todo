@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "@/Components";
-import { AppContext } from "@/lib/state";
+import { useAppContext } from "@/lib/state";
 import { useUpdateTodo } from "./hooks";
 
 interface ITodoEditProps {
@@ -11,7 +11,7 @@ interface ITodoEditProps {
 }
 
 const TodoEdit = ({ id, todo, isCompleted, setIsEdit }: ITodoEditProps) => {
-  const { setTodo } = useContext(AppContext);
+  const { setTodo } = useAppContext();
   const [editTodo, setEditTodo] = useState(todo);
   const { handleUpdateTodo, isSuccess } = useUpdateTodo();
 

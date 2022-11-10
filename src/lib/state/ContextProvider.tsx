@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 interface ContextProps {
   children: React.ReactNode;
@@ -36,7 +36,10 @@ interface AppContext {
   setTodo: React.Dispatch<React.SetStateAction<Todo>>;
 }
 
-export const AppContext = React.createContext<AppContext>(null!);
+const AppContext = React.createContext<AppContext>(null!);
+
+export const useAppContext = () => useContext(AppContext);
+
 const authDefault = {
   token: "",
   email: "",

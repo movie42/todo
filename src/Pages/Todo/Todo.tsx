@@ -1,5 +1,5 @@
-import { AppContext } from "@/lib/state";
-import { useContext, useEffect } from "react";
+import { useAppContext } from "@/lib/state";
+import { useEffect } from "react";
 import { useGetTodo } from "./hooks";
 import { TodoContainer } from "./Styles";
 
@@ -9,7 +9,7 @@ import TodoList from "./TodoList";
 const Todo = () => {
   const {
     todo: { isSuccess }
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const { todoList, getItem } = useGetTodo();
 
