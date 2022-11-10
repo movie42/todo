@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { AppContext } from "@/lib/state";
+import { useAppContext } from "@/lib/state";
 
 const Container = styled.header`
   box-sizing: border-box;
@@ -32,7 +31,7 @@ const Container = styled.header`
 const Header = () => {
   const {
     auth: { isLogin }
-  } = useContext(AppContext);
+  } = useAppContext();
 
   return (
     <Container>

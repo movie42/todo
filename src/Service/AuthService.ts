@@ -2,6 +2,7 @@ import { ClientReturnType, IHTTPClient } from "@/lib/api/axiosApiClient";
 
 export interface IAuthService {
   login: (email: string, password: string) => ClientReturnType;
+  signUp: (email: string, password: string) => ClientReturnType;
 }
 
 class AuthService implements IAuthService {
@@ -13,9 +14,18 @@ class AuthService implements IAuthService {
 
   login = (email: string, password: string) => {
     const response = this.httpClient.fetch({
+      endPoint: "/auth/signin",
+      config: { method: "POST", data: { email, password } }
+    });
+    return response;
+  };
+
+  signUp = (email: string, password: string) => {
+    const response = this.httpClient.fetch({
       endPoint: "/auth/signup",
       config: { method: "POST", data: { email, password } }
     });
+
     return response;
   };
 }

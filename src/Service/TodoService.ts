@@ -1,4 +1,4 @@
-import { IHTTPClient } from "@/lib/api/api";
+import { IHTTPClient } from "@/lib/api/axiosApiClient";
 import { AxiosError, AxiosResponse } from "axios";
 
 interface ITodoService {
@@ -14,7 +14,10 @@ class TodoService implements ITodoService {
   }
 
   getTodo = () => {
-    const response = this.httpClient.get("/todo");
+    const response = this.httpClient.fetch({
+      endPoint: "/todo",
+      config: { method: "GET" }
+    });
     return response;
   };
 }

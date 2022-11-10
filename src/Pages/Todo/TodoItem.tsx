@@ -1,5 +1,5 @@
-import { AppContext } from "@/lib/state";
-import React, { useContext, useEffect } from "react";
+import { useAppContext } from "@/lib/state";
+import React, { useEffect } from "react";
 import useDeleteTodo from "./hooks/useDeleteTodo";
 import useUpdateTodo from "./hooks/useUpdateTodo";
 
@@ -11,7 +11,7 @@ interface ITodoItemProps {
 }
 
 const TodoItem = ({ id, isCompleted, todo, setIsEdit }: ITodoItemProps) => {
-  const { setTodo } = useContext(AppContext);
+  const { setTodo } = useAppContext();
   const { handleUpdateTodo, isSuccess: isUpdateSuccess } = useUpdateTodo();
   const { handleDelete, isSuccess: isDeleteSuccess } = useDeleteTodo();
 
@@ -37,8 +37,7 @@ const TodoItem = ({ id, isCompleted, todo, setIsEdit }: ITodoItemProps) => {
         className={isCompleted ? "complete" : "complete-unset"}
         onClick={(e) =>
           handleUpdateTodo(e, { id, isCompleted: !isCompleted, todo })
-        }
-      ></button>
+        }></button>
       <h3>{todo}</h3>
 
       <button className="edit" onClick={() => setIsEdit(true)}>

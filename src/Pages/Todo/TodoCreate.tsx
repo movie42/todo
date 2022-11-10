@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Label } from "@/Components";
 import { useControlButtonDisabled } from "@/lib/hooks";
 import {
@@ -9,10 +9,10 @@ import {
   TodoLabel
 } from "./Styles";
 import { useCreateTodo } from "./hooks";
-import { AppContext } from "@/lib/state";
+import { useAppContext } from "@/lib/state";
 
 const TodoCreate = () => {
-  const { setTodo: setContextTodo } = useContext(AppContext);
+  const { setTodo: setContextTodo } = useAppContext();
   const { handleCreateTodoContents, isSuccess, isError, error } =
     useCreateTodo();
 

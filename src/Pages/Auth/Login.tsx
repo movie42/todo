@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { AuthenticationFormValue, useRequestAuthentication } from "./hooks";
 import {
   Container,
@@ -11,10 +11,10 @@ import {
   LoginLabel
 } from "./Styles";
 import { useControlButtonDisabled, useValidate } from "@/lib/hooks";
-import { AppContext } from "@/lib/state";
+import { useAppContext } from "@/lib/state";
 
 const Login = () => {
-  const { setAuth } = useContext(AppContext);
+  const { setAuth } = useAppContext();
   const {
     email,
     setEmail,
