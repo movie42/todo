@@ -4,8 +4,14 @@ interface ClientProps {
   endPoint: string;
   config: AxiosRequestConfig;
 }
+
+interface ServerError {
+  statusCode: number;
+  message: string;
+  error: string;
+}
 export type ClientReturnType = Promise<
-  AxiosResponse<any, any> | AxiosError<any, any> | undefined
+  AxiosResponse | AxiosError<ServerError> | undefined
 >;
 
 export interface IHTTPClient {
