@@ -36,7 +36,8 @@ interface AppContext {
   setTodo: React.Dispatch<React.SetStateAction<Todo>>;
 }
 
-export const AppContext = React.createContext<AppContext>(null!);
+const AppContext = React.createContext<AppContext>(null!);
+
 const authDefault = {
   token: "",
   email: "",
