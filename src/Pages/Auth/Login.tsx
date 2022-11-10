@@ -69,7 +69,7 @@ const Login = () => {
   }, [isError]);
 
   useEffect(() => {
-    setIsError(null);
+    setIsError(false);
     if (isEmail && isPassword) {
       return;
     }
