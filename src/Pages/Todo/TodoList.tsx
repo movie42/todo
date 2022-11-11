@@ -1,15 +1,9 @@
+import { Todo } from "@/lib/types";
 import { Container, TodoListContainer } from "./Styles";
 import TodoItemContainer from "./TodoItemContainer";
 
 interface ITodoListProps {
-  todoList: ITodoItemProps[];
-}
-
-interface ITodoItemProps {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-  userId?: number;
+  todoList: Todo[];
 }
 
 const TodoList = ({ todoList }: ITodoListProps) => {

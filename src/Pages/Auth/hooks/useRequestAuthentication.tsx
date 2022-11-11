@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "@/lib/state/AuthContextProvider";
 import { AxiosError } from "axios";
-
-export interface AuthenticationFormValue {
-  email: string;
-  password: string;
-}
-
-export interface ErrorProps {
-  statusCode?: number;
-  message: string;
-}
+import { AuthenticationFormValue, ErrorProps } from "@/lib/types";
 
 const useRequestAuthentication = () => {
   const { login, signUp } = useAuthContext();
@@ -57,7 +48,7 @@ const useRequestAuthentication = () => {
     if (response instanceof AxiosError) {
       const { statusCode, message } = response.response?.data || {
         statusCode: 400,
-        message: "비밀번호 또는 아이디를 확인해주세요."
+        message: "아이디 또는 비밀번호를 확인해주"
       };
       console.error(statusCode, message);
       setIsError(true);
