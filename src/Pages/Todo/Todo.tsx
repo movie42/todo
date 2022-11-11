@@ -22,7 +22,7 @@ const Todo = () => {
   return (
     <TodoContainer>
       <TodoCreate />
-      <TodoList todoList={todoList} />
+      <TodoList todoList={todoList ? todoList : []} />
     </TodoContainer>
   );
 };
