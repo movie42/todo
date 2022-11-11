@@ -1,54 +1,47 @@
-import { putData } from "@/lib/api/api";
-import { useLocalStorage } from "@/lib/hooks";
-import { LOCAL_STORAGE_KEY } from "@/lib/constants";
 import React, { useState } from "react";
 
-export interface UpdateTodoData {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-}
+import { Todo } from "@/lib/types";
+import { useTodoContext } from "@/lib/state";
+import { AxiosError } from "axios";
 
 const useUpdateTodo = () => {
+  const { updateTodo } = useTodoContext();
   const [isSuccess, setIsSuccess] = useState<boolean | null>(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<{
     statusCode: number;
     message: string;
   } | null>(null);
-  const { getLocalStorage } = useLocalStorage();
 
   const handleUpdateTodo = async (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
-    { id, todo, isCompleted }: UpdateTodoData
+    todo: Omit<Todo, "userId">
   ) => {
     e.preventDefault();
     setIsSuccess(null);
 
-    const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
+    const response = await updateTodo({
+      ...todo
+    });
 
-    if (todo && token) {
-      const response = await putData({
-        url: `/todos/${id}`,
-        data: { todo, isCompleted },
-        token
+    if (response instanceof AxiosError) {
+      const { statusCode, message } = response.response?.data || {
+        statusCode: 401,
+        message: "할 일을 수정 할 수가 없네요."
+      };
+
+      setError({
+        statusCode,
+        message
       });
-
-      if (response.id) {
-        setIsSuccess(true);
-        return;
-      }
-
-      const {
-        response: {
-          data: { statusCode, message }
-        }
-      } = response;
-
       setIsSuccess(false);
-      setError({ statusCode, message });
       setIsError(true);
+      return { statusCode, message };
     }
+
+    const successUpdateTodo = response?.data;
+    setIsSuccess(true);
+    return successUpdateTodo;
   };
 
   return { isSuccess, handleUpdateTodo, isError, error };

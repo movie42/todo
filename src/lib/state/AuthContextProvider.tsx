@@ -1,7 +1,8 @@
 import React, { createContext, ReactNode, useContext } from "react";
-import AuthService, { IAuthService } from "@/Service/AuthService";
-import AxiosHTTPClient from "../api/axiosApiClient";
+import { AuthService } from "@/Service";
+import { AxiosHTTPClient } from "../api";
 import { BASE_URL } from "../constants";
+import { IAuthService } from "../types/types";
 
 const AuthContext = createContext<IAuthService>(null!);
 

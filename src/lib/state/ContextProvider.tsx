@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Todo } from "../types";
 
 interface ContextProps {
   children: React.ReactNode;
@@ -18,22 +19,15 @@ interface IAuthProps {
 }
 
 interface TodoData {
-  id?: number;
-  todo?: string;
-  isCompleted?: boolean;
-  userId?: number;
-}
-
-interface Todo {
-  data?: TodoData[];
+  data?: Todo[];
   isSuccess?: boolean;
 }
 
 interface AppContext {
   auth: IAuthProps;
   setAuth: React.Dispatch<React.SetStateAction<IAuthProps>>;
-  todo: Todo;
-  setTodo: React.Dispatch<React.SetStateAction<Todo>>;
+  todo: TodoData;
+  setTodo: React.Dispatch<React.SetStateAction<TodoData>>;
 }
 
 const AppContext = React.createContext<AppContext>(null!);
@@ -58,7 +52,7 @@ const todoDefault = {
 };
 const ContextProvider = ({ children }: ContextProps) => {
   const [auth, setAuth] = useState<IAuthProps>(authDefault);
-  const [todo, setTodo] = useState<Todo>(todoDefault);
+  const [todo, setTodo] = useState<TodoData>(todoDefault);
 
   const value = {
     auth,

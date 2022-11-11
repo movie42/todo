@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { AuthenticationFormValue, useRequestAuthentication } from "./hooks";
+import { useRequestAuthentication } from "./hooks";
 import {
   Container,
   FormContainer,
@@ -12,6 +12,7 @@ import {
 } from "./Styles";
 import { useControlButtonDisabled, useValidate } from "@/lib/hooks";
 import { useAppContext } from "@/lib/state";
+import { AuthenticationFormValue } from "@/lib/types";
 
 const Login = () => {
   const { setAuth } = useAppContext();

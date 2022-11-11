@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { postData } from "@/lib/api/api";
-import { LOCAL_STORAGE_KEY } from "@/lib/constants";
-import { useLocalStorage } from "@/lib/hooks";
+import { useTodoContext } from "@/lib/state";
+import { AxiosError } from "axios";
 
 const useCreateTodo = () => {
+  const { createTodo } = useTodoContext();
   const [isSuccess, setIsSuccess] = useState<boolean | null>(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<{
     statusCode: number;
     message: string;
   } | null>(null);
-  const { getLocalStorage } = useLocalStorage();
 
   const handleCreateTodoContents = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -19,30 +18,26 @@ const useCreateTodo = () => {
     e.preventDefault();
     setIsSuccess(null);
 
-    const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
+    const response = await createTodo(todo);
 
-    if (todo && token) {
-      const response = await postData({
-        url: "/todos",
-        data: { todo },
-        token
+    if (response instanceof AxiosError) {
+      const { statusCode, message } = response.response?.data || {
+        statusCode: 401,
+        message: "할 일을 만들 수가 없네요."
+      };
+
+      setError({
+        statusCode,
+        message
       });
-
-      if (response.id) {
-        setIsSuccess(true);
-        return;
-      }
-
-      const {
-        response: {
-          data: { statusCode, message }
-        }
-      } = response;
-
       setIsSuccess(false);
-      setError({ statusCode, message });
       setIsError(true);
+      return { statusCode, message };
     }
+
+    const successCreateTodo = response?.data;
+    setIsSuccess(true);
+    return successCreateTodo;
   };
 
   return { isSuccess, handleCreateTodoContents, isError, error };
