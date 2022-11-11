@@ -1,14 +1,8 @@
-type Key = "WANTED_TODO_STORE";
-
-interface ITokenRepository<TValue> {
-  getLocalStorage: (key: Key) => { token: string } | null;
-  setLocalStorage: (key: Key, value: TValue) => void;
-  removeLocalStorage: (key: Key) => void;
-}
+import { ITokenRepository, Key } from "../types";
 
 class TokenRepository<TValue> implements ITokenRepository<TValue> {
   getLocalStorage = (key: Key) => {
-    const token = localStorage.get(key);
+    const token = localStorage.getItem(key);
     if (token) {
       return JSON.parse(token);
     }
