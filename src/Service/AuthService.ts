@@ -1,9 +1,12 @@
-import { ClientReturnType, IHTTPClient } from "@/lib/api/axiosApiClient";
-
-export interface IAuthService {
-  login: (email: string, password: string) => ClientReturnType;
-  signUp: (email: string, password: string) => ClientReturnType;
-}
+import {
+  IAuthService,
+  IHTTPClient,
+  LoginData,
+  LoginVariable,
+  ServerError,
+  SignUpData,
+  SignUpVariable
+} from "@/lib/types/types";
 
 class AuthService implements IAuthService {
   private httpClient;
@@ -13,17 +16,35 @@ class AuthService implements IAuthService {
   }
 
   login = (email: string, password: string) => {
-    const response = this.httpClient.fetch({
+    const response = this.httpClient.post<
+      LoginData,
+      ServerError,
+      LoginVariable
+    >({
       endPoint: "/auth/signin",
-      config: { method: "POST", data: { email, password } }
+      data: { email, password },
+      config: {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
     });
     return response;
   };
 
   signUp = (email: string, password: string) => {
-    const response = this.httpClient.fetch({
+    const response = this.httpClient.post<
+      SignUpData,
+      ServerError,
+      SignUpVariable
+    >({
       endPoint: "/auth/signup",
-      config: { method: "POST", data: { email, password } }
+      config: {
+        data: { email, password },
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
     });
 
     return response;
