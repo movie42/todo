@@ -1,56 +1,42 @@
-import { getData } from "@/lib/api/api";
-import { LOCAL_STORAGE_KEY } from "@/lib/constants";
-import { useLocalStorage } from "@/lib/hooks";
+// import { getData } from "@/lib/api/api";
+// import { LOCAL_STORAGE_KEY } from "@/lib/constants";
+// import { useLocalStorage } from "@/lib/hooks";
+import { useTodoContext } from "@/lib/state";
+import { Todo } from "@/lib/types";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-
-interface ITodoItemProps {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-  userId: number;
-}
 
 const useGetTodo = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [todoList, setTodoList] = useState<ITodoItemProps[]>([
-    {
-      id: 1,
-      todo: "",
-      isCompleted: false,
-      userId: 1
-    }
-  ]);
-
-  const { getLocalStorage } = useLocalStorage();
+  const [todoList, setTodoList] = useState<Todo[]>();
+  const { getTodo } = useTodoContext();
 
   const getItem = async () => {
     setIsLoading(true);
     setIsSuccess(false);
+    setIsError(false);
 
-    const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
-
-    if (token) {
-      const response = await getData({ url: "/todos", token });
-
-      if (!response.length) {
-        setIsLoading(false);
-        setIsSuccess(false);
-        setTodoList([]);
-        return;
-      }
-
-      setTodoList([...response]);
+    const response = await getTodo();
+    if (response instanceof AxiosError) {
+      setIsError(true);
       setIsLoading(false);
-      setIsSuccess(true);
+      setIsSuccess(false);
+      setTodoList([]);
+      return;
     }
+    const todos = response?.data;
+    setTodoList(todos);
+    setIsLoading(false);
+    setIsSuccess(true);
   };
 
   useEffect(() => {
     getItem();
   }, []);
 
-  return { todoList, getItem, isSuccess, isLoading };
+  return { todoList, getItem, isSuccess, isLoading, isError };
 };
 
 export default useGetTodo;

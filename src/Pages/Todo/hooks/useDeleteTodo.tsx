@@ -1,37 +1,35 @@
 import { useState } from "react";
-import { deleteData } from "@/lib/api/api";
-import { useLocalStorage } from "@/lib/hooks";
-import { LOCAL_STORAGE_KEY } from "@/lib/constants";
+
+import { useTodoContext } from "@/lib/state";
+import { AxiosError } from "axios";
 
 const useDeleteTodo = () => {
+  const { deleteTodo } = useTodoContext();
   const [isSuccess, setIsSuccess] = useState<boolean | null>(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<{
     statusCode?: number;
     message?: string;
   } | null>(null);
-  const { getLocalStorage } = useLocalStorage();
 
   const handleDelete = async (id: number) => {
     setIsSuccess(null);
 
-    const { token } = getLocalStorage(LOCAL_STORAGE_KEY);
+    const response = await deleteTodo(id);
 
-    if (token) {
-      const response = await deleteData({ url: `/todos/${id}`, token });
-
-      if (response.status === 204) {
-        setIsSuccess(true);
-        setIsError(false);
-        return;
-      }
-
+    if (response instanceof AxiosError) {
       setIsError(true);
       setError({
         statusCode: response.status,
         message: "삭제에 실패하였습니다."
       });
+      return;
     }
+
+    const status = response?.status;
+    setIsSuccess(true);
+    setIsError(false);
+    return status;
   };
 
   return { handleDelete, isSuccess, error, isError };
